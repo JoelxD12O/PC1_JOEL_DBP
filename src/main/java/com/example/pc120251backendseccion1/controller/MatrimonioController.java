@@ -5,16 +5,17 @@ import com.example.pc120251backendseccion1.dto.ValidarMatrimonioResponse;
 import com.example.pc120251backendseccion1.exception.MatrimonioNoPermitidoException;
 import com.example.pc120251backendseccion1.service.MatrimonioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
-// @PreAuthorize("hasAnyRole('ADMIN', 'REGISTRADOR')") // Seguridad comentada para activar más tarde
+ @PreAuthorize("hasAnyRole('ADMIN', 'REGISTRADOR')") // Seguridad comentada para activar más tarde
 public class MatrimonioController {
 
     @Autowired
     private MatrimonioService matrimonioService;
-
+    
     // 7. POST /matrimonios - Registrar matrimonio entre dos personas
     @PostMapping("/matrimonios")
     public void registrarMatrimonio(@RequestBody RegistrarMatrimonioRequest request) {

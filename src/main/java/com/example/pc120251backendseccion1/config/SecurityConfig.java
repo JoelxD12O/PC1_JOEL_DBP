@@ -70,10 +70,7 @@ public class SecurityConfig {
     }
 
     // Encoder de contraseñas para Spring Security (BCrypt)
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+
 
     // AuthenticationManager para manejar la autenticación
     @Bean
@@ -97,7 +94,10 @@ public class SecurityConfig {
         expressionHandler.setDefaultRolePrefix("");
         return expressionHandler;
     }
-
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
     // Configuración para el TaskExecutor
     @Bean(name = "taskExecutor")
     public TaskExecutor taskExecutor() {

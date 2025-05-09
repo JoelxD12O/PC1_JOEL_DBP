@@ -6,6 +6,7 @@ import com.example.pc120251backendseccion1.domain.Persona;
 import com.example.pc120251backendseccion1.exception.PersonaNoEncontradaException;
 import com.example.pc120251backendseccion1.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -61,7 +62,7 @@ public class PersonaController {
     }
 
     // 5. DELETE /personas/{dni} - Eliminar persona (si no tiene descendientes)
-    // @PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/personas/{dni}")
     public void eliminarPersona(@PathVariable String dni) {
         personaService.eliminarPersona(dni);
