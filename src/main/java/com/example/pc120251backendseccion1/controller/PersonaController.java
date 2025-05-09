@@ -15,14 +15,14 @@ import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/api")
-// @PreAuthorize("hasAnyRole('ADMIN', 'REGISTRADOR', 'CONSULTOR')") // Activar esto en prod
+@PreAuthorize("hasAnyRole('ADMIN', 'REGISTRADOR', 'CONSULTOR')") // Activar esto en prod
 public class PersonaController {
 
     @Autowired
     private PersonaService personaService;
 
     // 1. POST /personas - Crear persona
-    // @PreAuthorize("hasAnyRole('ADMIN', 'REGISTRADOR')")
+@PreAuthorize("hasAnyRole('ADMIN', 'REGISTRADOR')")
     @PostMapping("/personas")
     public void crearPersona(@RequestBody CrearPersonaRequest request) {
         Persona persona = new Persona();
@@ -37,7 +37,7 @@ public class PersonaController {
     }
 
     // 2. GET /personas/{dni} - Consultar persona por DNI
-    // @PreAuthorize("hasAnyRole('ADMIN', 'REGISTRADOR', 'CONSULTOR')")
+@PreAuthorize("hasAnyRole('ADMIN', 'REGISTRADOR', 'CONSULTOR')")
     @GetMapping("/personas/{dni}")
     public PersonaDTO obtenerPorDni(@PathVariable String dni) {
         Persona persona = personaService.buscarPorDni(dni)
@@ -46,14 +46,14 @@ public class PersonaController {
     }
 
     // 3. PUT /personas/{dni}/nombres - Actualizar nombres y apellidos
-    // @PreAuthorize("hasAnyRole('ADMIN', 'REGISTRADOR')")
+@PreAuthorize("hasAnyRole('ADMIN', 'REGISTRADOR')")
     @PutMapping("/personas/{dni}/nombres")
     public void actualizarNombre(@PathVariable String dni, @RequestBody ActualizarNombreRequest request) {
         personaService.actualizarNombresYApellidos(dni, request.getNombres(), request.getApellidos());
     }
 
     // 4. PUT /personas/{dni}/padres - Registrar padres
-    // @PreAuthorize("hasAnyRole('ADMIN', 'REGISTRADOR')")
+@PreAuthorize("hasAnyRole('ADMIN', 'REGISTRADOR')")
     @PutMapping("/personas/{dni}/padres")
     public void actualizarPadres(@PathVariable String dni, @RequestBody RegistrarPadresRequest request) {
         Persona padre = request.getDniPadre() != null ? personaService.buscarPorDni(request.getDniPadre()).orElse(null) : null;
@@ -69,7 +69,7 @@ public class PersonaController {
     }
 
     // 6. GET /personas?nombre=xxx&estadoCivil=xxx - Listar con filtros opcionales
-    // @PreAuthorize("hasAnyRole('ADMIN', 'REGISTRADOR', 'CONSULTOR')")
+@PreAuthorize("hasAnyRole('ADMIN', 'REGISTRADOR', 'CONSULTOR')")
     @GetMapping("/personas")
     public List<PersonaDTO> listarPersonas(
             @RequestParam(required = false) String nombre,
